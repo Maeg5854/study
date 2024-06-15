@@ -1,5 +1,6 @@
 package ch02;
 
+
 import org.jetbrains.annotations.NotNull;
 
 public class PasswordStrengthMeter {
