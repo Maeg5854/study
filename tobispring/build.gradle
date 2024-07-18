@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group 'org.mandy'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.springframework:spring-context:6.1.11'
+    implementation 'org.testng:testng:7.1.0'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.21'
+    implementation 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
