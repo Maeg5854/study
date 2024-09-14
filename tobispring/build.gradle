@@ -10,12 +10,14 @@ repositories {
 }
 
 dependencies {
-
     implementation 'org.springframework:spring-context:6.1.11'
-    implementation 'org.testng:testng:7.1.0'
-    runtimeOnly 'mysql:mysql-connector-java:8.0.21'
+    implementation 'org.springframework:spring-jdbc:6.1.12'
+    implementation 'mysql:mysql-connector-java:8.0.21'
+
     implementation 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    testImplementation 'org.assertj:assertj-core:3.22.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }

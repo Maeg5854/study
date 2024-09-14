@@ -1,4 +1,4 @@
-package org.mandy.chap1;
+package org.mandy.tobi;
 
 import java.sql.Connection;
 import java.sql.SQLException;
