@@ -14,6 +14,7 @@ public class DaoFactory {
         userDao.setDataSource(dataSource());
         return userDao;
     }
+
     @Bean
     public DataSource dataSource() {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();

@@ -1,73 +1,54 @@
 package org.mandy.tobi;
 
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.List;
 
 public class UserDao {
-    private DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
+    private RowMapper<User> userMapper = new RowMapper<User>() {
+        @Override
+        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+            User user = new User();
+            user.setId(Integer.parseInt(rs.getString("id")));
+            user.setName(rs.getString("name"));
+            user.setPassword(rs.getString("password"));
+            return user;
+        }
+    };
+
 
     public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     public void add(User user) throws SQLException {
-        Connection c = dataSource.getConnection();
-
-        PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
-        ps.setInt(1, user.getId());
-        ps.setString(2, user.getName());
-        ps.setString(3, user.getPassword());
-        ps.executeUpdate();
-        ps.close();
-        c.close();
+        this.jdbcTemplate.update("insert into users(id, name, password) values (?,?,?)",
+                user.getId(), user.getName(), user.getPassword());
     }
+
     public User get(int id) throws SQLException {
-        Connection c = dataSource.getConnection();
-        PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
-        ps.setInt(1, id);
-
-        ResultSet rs = ps.executeQuery();
-
-        User user = null;
-        if(rs.next()) {
-            user = new User();
-            user.setId(rs.getInt("id"));
-            user.setName(rs.getString("name"));
-            user.setPassword(rs.getString("password"));
-        }
-
-        rs.close();
-        ps.close();
-        c.close();
-
-        if (user==null) throw new EmptyResultDataAccessException(1); // param1 : expectedSize.
-
-        return user;
+        return this.jdbcTemplate.queryForObject("select * from users where id = ?",
+                new Object[]{id},
+                new int[]{Types.INTEGER}, // 파라미터 타입을 넣어주는 것으로 사용해야 한다.
+                userMapper);
     }
 
-    public void deleteAll() throws SQLException{
-        Connection c = dataSource.getConnection();
-
-        PreparedStatement ps = c.prepareStatement("delete from users");
-        ps.executeUpdate();
-
-        ps.close();
-        c.close();
+    public void deleteAll() throws SQLException {
+        this.jdbcTemplate.update("delete from users");
     }
 
     public int getCount() throws SQLException {
-        Connection c = dataSource.getConnection();
-
-        PreparedStatement ps = c.prepareStatement("select count(*) from users");
-        ResultSet rs = ps.executeQuery();
-        rs.next();
-        int count = rs.getInt(1);
-        rs.close();
-        ps.close();
-        c.close();
-
-        return count;
+        return this.jdbcTemplate.queryForObject("select count(*) from users", Integer.class);
     }
+
+    public List<User> getAll() {
+        return this.jdbcTemplate.query("select * from users", userMapper);
+    }
+
 }
