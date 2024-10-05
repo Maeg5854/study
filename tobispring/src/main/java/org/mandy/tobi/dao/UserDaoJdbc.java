@@ -1,6 +1,7 @@
 package org.mandy.tobi.dao;
 
-import org.mandy.tobi.User;
+import org.mandy.tobi.user.domain.Level;
+import org.mandy.tobi.user.domain.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -19,6 +20,9 @@ public class UserDaoJdbc implements UserDao {
             user.setId(Integer.parseInt(rs.getString("id")));
             user.setName(rs.getString("name"));
             user.setPassword(rs.getString("password"));
+            user.setLevel(Level.valueOf(rs.getInt("level")));
+            user.setLoginCount(rs.getInt("login_count"));
+            user.setRecommendCount(rs.getInt("recommend_count"));
             return user;
         }
     };
@@ -29,17 +33,8 @@ public class UserDaoJdbc implements UserDao {
     }
 
     public void add(User user) throws DuplicateUserIdException {
-//        try {
-//            this.jdbcTemplate.update("insert into users(id, name, password) values (?,?,?)",
-//                    user.getId(), user.getName(), user.getPassword());
-//        } catch (SQLException e) {
-//            if(e.getErrorCode() == MysqlErrorNumbers.ER_DUP_ENTRY)
-//                throw new DuplicateUserIdException(e);
-//            else
-//                throw new RuntimeException(e);
-//        }
-        this.jdbcTemplate.update("insert into users(id, name, password) values (?,?,?)",
-                user.getId(), user.getName(), user.getPassword());
+        this.jdbcTemplate.update("insert into users(id, name, password, level, login_count, recommend_count) values (?,?,?,?,?,?)",
+                user.getId(), user.getName(), user.getPassword(), user.getLevel().intValue(), user.getLoginCount(), user.getRecommendCount());
     }
 
     public User get(int id) {
@@ -55,6 +50,14 @@ public class UserDaoJdbc implements UserDao {
 
     public int getCount() {
         return this.jdbcTemplate.queryForObject("select count(*) from users", Integer.class);
+    }
+
+    @Override
+    public void update(User user) {
+        this.jdbcTemplate.update(
+                "update users set name = ?, password = ?, level = ?, login_count = ?, recommend_count = ? where id = ?",
+                user.getName(), user.getPassword(), user.getLevel().intValue(), user.getLoginCount(), user.getRecommendCount(), user.getId()
+        );
     }
 
     public List<User> getAll() {

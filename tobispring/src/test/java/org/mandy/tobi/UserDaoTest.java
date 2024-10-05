@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mandy.tobi.dao.UserDao;
+import org.mandy.tobi.user.domain.Level;
+import org.mandy.tobi.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -20,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = DaoFactory.class)
+@ContextConfiguration(classes = ApplicationContext.class)
 public class UserDaoTest {
 
     @Autowired
@@ -33,10 +35,9 @@ public class UserDaoTest {
 
     @BeforeEach
     public void setUp() {
-        System.out.println(this);
-        this.user1 = new User(1, "김혜지", "맨디맨디");
-        this.user2 = new User(2, "김혜지", "맨디맨디");
-        this.user3 = new User(3, "김혜지", "맨디맨디");
+        this.user1 = new User(1, "김혜지", "맨디맨디", Level.BASIC, 1, 0);
+        this.user2 = new User(2, "김혜지", "맨디맨디", Level.SILVER, 55, 10);
+        this.user3 = new User(3, "김혜지", "맨디맨디", Level.GOLD, 100, 40);
     }
 
     @Test
@@ -110,6 +111,9 @@ public class UserDaoTest {
         assertThat(user1.getId()).isEqualTo(user2.getId());
         assertThat(user1.getPassword()).isEqualTo(user2.getPassword());
         assertThat(user1.getName()).isEqualTo(user2.getName());
+        assertThat(user1.getRecommendCount()).isEqualTo(user2.getRecommendCount());
+        assertThat(user1.getLevel()).isEqualTo(user2.getLevel());
+        assertThat(user1.getLoginCount()).isEqualTo(user2.getLoginCount());
     }
 
     @Test
@@ -118,6 +122,25 @@ public class UserDaoTest {
 
         dao.add(user1);
         assertThrows(DuplicateKeyException.class, ()->dao.add(user1));
+    }
+
+    @Test
+    public void update() {
+        dao.deleteAll();
+        dao.add(user1);
+        dao.add(user2);
+
+        user1.setName("민셔민셔");
+        user1.setPassword("kkamui");
+        user1.setLevel(Level.GOLD);
+        user1.setLoginCount(100);
+        user1.setRecommendCount(5000);
+        dao.update(user1);
+
+        User user1update = dao.get(user1.getId());
+        checkSameUser(user1, user1update);
+        User user2update = dao.get(user2.getId());
+        checkSameUser(user2, user2update);
     }
 
     @Test

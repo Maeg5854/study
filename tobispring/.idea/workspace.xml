@@ -52,8 +52,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
+        <option value="Enum" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -81,6 +82,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.mandy.tobi.user.domain" />
       <recent name="org.mandy.tobi.dao" />
       <recent name="org.mandy.tobi.template" />
       <recent name="org.mandy.tobi" />
@@ -89,7 +91,7 @@
       <recent name="$PROJECT_DIR$/src/test/resources/org/mandy/tobi/template" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.UserDaoTest.sqlExceptionTranslate">
+  <component name="RunManager" selected="Gradle.UserServiceWithGeneralUpgradeLevelTest">
     <configuration name="UserDaoTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -113,7 +115,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserDaoTest.addAndGet" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -126,7 +128,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.UserDaoTest.addAndGet&quot;" />
+            <option value="&quot;org.mandy.tobi.user.domain.UserServiceTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -136,7 +138,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserDaoTest.duplicateKey" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserServiceTest.upgradeLevels" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -149,7 +151,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.UserDaoTest.duplicateKey&quot;" />
+            <option value="&quot;org.mandy.tobi.user.domain.UserServiceTest.upgradeLevels&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -159,7 +161,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserDaoTest.getAll" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserServiceWithGeneralUpgradeLevelTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -172,7 +174,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.UserDaoTest.getAll&quot;" />
+            <option value="&quot;org.mandy.tobi.user.domain.UserServiceWithGeneralUpgradeLevelTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -182,7 +184,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserDaoTest.sqlExceptionTranslate" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserTest.cannotUpgradeLevel" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -195,7 +197,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.UserDaoTest.sqlExceptionTranslate&quot;" />
+            <option value="&quot;org.mandy.tobi.user.domain.UserTest.cannotUpgradeLevel&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -207,11 +209,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.UserDaoTest.sqlExceptionTranslate" />
-        <item itemvalue="Gradle.UserDaoTest.duplicateKey" />
+        <item itemvalue="Gradle.UserServiceWithGeneralUpgradeLevelTest" />
+        <item itemvalue="Gradle.UserServiceTest" />
         <item itemvalue="Gradle.UserDaoTest" />
-        <item itemvalue="Gradle.UserDaoTest.addAndGet" />
-        <item itemvalue="Gradle.UserDaoTest.getAll" />
+        <item itemvalue="Gradle.UserServiceTest.upgradeLevels" />
+        <item itemvalue="Gradle.UserTest.cannotUpgradeLevel" />
       </list>
     </recent_temporary>
   </component>

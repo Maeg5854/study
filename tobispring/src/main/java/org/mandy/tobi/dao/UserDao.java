@@ -1,6 +1,6 @@
 package org.mandy.tobi.dao;
 
-import org.mandy.tobi.User;
+import org.mandy.tobi.user.domain.User;
 
 import java.util.List;
 
@@ -10,4 +10,5 @@ public interface UserDao {
     List<User> getAll();
     void deleteAll();
     int getCount();
+    void update(User user1);
 }

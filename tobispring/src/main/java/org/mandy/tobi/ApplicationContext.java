@@ -2,6 +2,9 @@ package org.mandy.tobi;
 
 import org.mandy.tobi.dao.UserDao;
 import org.mandy.tobi.dao.UserDaoJdbc;
+import org.mandy.tobi.user.domain.GeneralUserLevelUpgradePolicy;
+import org.mandy.tobi.user.domain.UserLevelUpgradePolicy;
+import org.mandy.tobi.user.domain.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -9,7 +12,22 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import javax.sql.DataSource;
 
 @Configuration
-public class DaoFactory {
+public class ApplicationContext {
+    @Bean
+    public UserService userService() {
+        UserService userService = new UserService();
+        userService.setUserDao(userDao());
+        userService.setLevelUpgradePolicy(userLevelUpgradePolicy());
+        return userService;
+    }
+
+    @Bean
+    public UserLevelUpgradePolicy userLevelUpgradePolicy() {
+        GeneralUserLevelUpgradePolicy policy = new GeneralUserLevelUpgradePolicy();
+        policy.setUserDao(userDao());
+        return policy;
+    }
+
     @Bean
     public UserDao userDao() {
         UserDaoJdbc userDao = new UserDaoJdbc();
