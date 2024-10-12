@@ -1,18 +1,11 @@
 package org.mandy.tobi.user.domain;
 
-import org.mandy.tobi.dao.UserDao;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GeneralUserLevelUpgradePolicy implements UserLevelUpgradePolicy {
     public static final int MIN_LOGIN_COUNT_FOR_SILVER = 50;
     public static final int MIN_RECCOMEND_COUNT_FOR_GOLD = 30;
-
-    private UserDao userDao;
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
 
     @Override
     public boolean canUpgradeLevel(User user) {
@@ -32,6 +25,5 @@ public class GeneralUserLevelUpgradePolicy implements UserLevelUpgradePolicy {
     @Override
     public void upgradeLevel(User user) {
         user.upgradeLevel();
-        userDao.update(user);
     }
 }

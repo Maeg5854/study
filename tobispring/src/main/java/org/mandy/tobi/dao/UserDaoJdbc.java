@@ -23,6 +23,7 @@ public class UserDaoJdbc implements UserDao {
             user.setLevel(Level.valueOf(rs.getInt("level")));
             user.setLoginCount(rs.getInt("login_count"));
             user.setRecommendCount(rs.getInt("recommend_count"));
+            user.setEmail((rs.getString("email")));
             return user;
         }
     };
@@ -33,8 +34,8 @@ public class UserDaoJdbc implements UserDao {
     }
 
     public void add(User user) throws DuplicateUserIdException {
-        this.jdbcTemplate.update("insert into users(id, name, password, level, login_count, recommend_count) values (?,?,?,?,?,?)",
-                user.getId(), user.getName(), user.getPassword(), user.getLevel().intValue(), user.getLoginCount(), user.getRecommendCount());
+        this.jdbcTemplate.update("insert into users(id, name, password, level, login_count, recommend_count, email) values (?,?,?,?,?,?,?)",
+                user.getId(), user.getName(), user.getPassword(), user.getLevel().intValue(), user.getLoginCount(), user.getRecommendCount(), user.getEmail());
     }
 
     public User get(int id) {
@@ -55,8 +56,8 @@ public class UserDaoJdbc implements UserDao {
     @Override
     public void update(User user) {
         this.jdbcTemplate.update(
-                "update users set name = ?, password = ?, level = ?, login_count = ?, recommend_count = ? where id = ?",
-                user.getName(), user.getPassword(), user.getLevel().intValue(), user.getLoginCount(), user.getRecommendCount(), user.getId()
+                "update users set name = ?, password = ?, level = ?, login_count = ?, recommend_count = ?, email = ? where id = ?",
+                user.getName(), user.getPassword(), user.getLevel().intValue(), user.getLoginCount(), user.getRecommendCount(), user.getEmail(), user.getId()
         );
     }
 

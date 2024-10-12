@@ -91,7 +91,7 @@
       <recent name="$PROJECT_DIR$/src/test/resources/org/mandy/tobi/template" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.UserServiceWithGeneralUpgradeLevelTest">
+  <component name="RunManager" selected="Gradle.UserServiceWithGeneralUpgradeLevelTest.upgradeLevels">
     <configuration name="UserDaoTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -106,6 +106,29 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;org.mandy.tobi.UserDaoTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserDaoTest.getAll" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.mandy.tobi.UserDaoTest.getAll&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -138,29 +161,6 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserServiceTest.upgradeLevels" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.user.domain.UserServiceTest.upgradeLevels&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="UserServiceWithGeneralUpgradeLevelTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -184,7 +184,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserTest.cannotUpgradeLevel" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserServiceWithGeneralUpgradeLevelTest.upgradeLevels" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -197,7 +197,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.user.domain.UserTest.cannotUpgradeLevel&quot;" />
+            <option value="&quot;org.mandy.tobi.user.domain.UserServiceWithGeneralUpgradeLevelTest.upgradeLevels&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -209,11 +209,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.UserServiceWithGeneralUpgradeLevelTest" />
+        <item itemvalue="Gradle.UserServiceWithGeneralUpgradeLevelTest.upgradeLevels" />
         <item itemvalue="Gradle.UserServiceTest" />
+        <item itemvalue="Gradle.UserServiceWithGeneralUpgradeLevelTest" />
         <item itemvalue="Gradle.UserDaoTest" />
-        <item itemvalue="Gradle.UserServiceTest.upgradeLevels" />
-        <item itemvalue="Gradle.UserTest.cannotUpgradeLevel" />
+        <item itemvalue="Gradle.UserDaoTest.getAll" />
       </list>
     </recent_temporary>
   </component>

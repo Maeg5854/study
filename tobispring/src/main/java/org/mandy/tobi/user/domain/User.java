@@ -14,8 +14,9 @@ public class User {
     private String name;
     private String password;
     private Level level;
-    int loginCount;
-    int recommendCount;
+    private int loginCount;
+    private int recommendCount;
+    private String email;
 
     public void upgradeLevel() throws IllegalStateException {
         Level nextLevel = this.level.nextLevel();
