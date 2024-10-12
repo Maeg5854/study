@@ -1,14 +1,18 @@
-package org.mandy.tobi.user.domain;
+package org.mandy.tobi.user.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mandy.tobi.ApplicationContext;
 import org.mandy.tobi.dao.UserDao;
+import org.mandy.tobi.user.domain.Level;
+import org.mandy.tobi.user.domain.User;
+import org.mandy.tobi.user.domain.UserLevelUpgradePolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -30,10 +34,14 @@ public class UserServiceTest {
     @Autowired
     private UserService userService;
     @Autowired
+    private UserServiceImpl userServiceImpl;
+    @Autowired
     private UserLevelUpgradePolicy policy;
     @Autowired
     private MailSender mailSender;
     private List<User> users;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     @BeforeEach
     public void setUp() {
@@ -66,16 +74,19 @@ public class UserServiceTest {
 
     @Test
     public void upgradeAllOrNothing() throws Exception {
-        UserService testUserService = new TestUserService(users.get(3).getId());
-        testUserService.setDataSource(dataSource);
+        UserServiceImpl testUserService = new TestUserService(users.get(3).getId());
         testUserService.setUserDao(this.userDao);
         testUserService.setLevelUpgradePolicy(policy);
         testUserService.setMailSender(mailSender);
 
+        UserServiceTx txUserService = new UserServiceTx();
+        txUserService.setTransactionManager(transactionManager);
+        txUserService.setUserService(testUserService);
+
         userDao.deleteAll();
         for(User user : users) userDao.add(user);
 
-        assertThatThrownBy(() -> testUserService.upgradeLevels()).isInstanceOf(TestUserServiceException.class);
+        assertThatThrownBy(() -> txUserService.upgradeLevels()).isInstanceOf(TestUserServiceException.class);
 
         checkLevelUpgraded(users.get(1), false);
     }

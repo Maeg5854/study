@@ -1,22 +1,17 @@
-package org.mandy.tobi.user.domain;
+package org.mandy.tobi.user.service;
 
 import org.mandy.tobi.dao.UserDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.mandy.tobi.user.domain.Level;
+import org.mandy.tobi.user.domain.User;
+import org.mandy.tobi.user.domain.UserLevelUpgradePolicy;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 @Service
-public class UserService {
-    @Autowired
-    DataSource dataSource;
+public class UserServiceImpl implements UserService {
 
     private MailSender mailSender;
     UserDao userDao;
@@ -25,8 +20,6 @@ public class UserService {
     public void setMailSender(MailSender mailSender) {
         this.mailSender = mailSender;
     }
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;}
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
@@ -34,24 +27,15 @@ public class UserService {
         this.levelUpgradePolicy = levelUpgradePolicy;
     }
 
-    public void upgradeLevels() throws Exception {
-        PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
-        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-
-
-        try {
-            List<User> users = userDao.getAll();
-            for (User user : users) {
-                if (levelUpgradePolicy.canUpgradeLevel(user)) {
-                    upgradeLevel(user);
-                }
+    public void upgradeLevels() {
+        List<User> users = userDao.getAll();
+        for (User user : users) {
+            if (levelUpgradePolicy.canUpgradeLevel(user)) {
+                upgradeLevel(user);
             }
-            transactionManager.commit(status);
-        } catch(Exception e) {
-            transactionManager.rollback(status);
-            throw e;
         }
     }
+
     protected void upgradeLevel(User user) {
         levelUpgradePolicy.upgradeLevel(user);
         userDao.update(user);

@@ -1,6 +1,8 @@
-package org.mandy.tobi.user.domain;
+package org.mandy.tobi.user.service;
 
-public class TestUserService extends UserService {
+import org.mandy.tobi.user.domain.User;
+
+public class TestUserService extends UserServiceImpl {
     private int id;
     public TestUserService(int id) {
         this.id = id;

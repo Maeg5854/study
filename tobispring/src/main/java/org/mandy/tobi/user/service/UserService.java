@@ -1,4 +1,4 @@
-package org.mandy.tobi;
+package org.mandy.tobi.user.service;
 
 
 import org.mandy.tobi.user.domain.User;

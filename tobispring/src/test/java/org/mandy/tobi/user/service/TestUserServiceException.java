@@ -1,4 +1,4 @@
-package org.mandy.tobi.user.domain;
+package org.mandy.tobi.user.service;
 
 public class TestUserServiceException extends RuntimeException {
 }

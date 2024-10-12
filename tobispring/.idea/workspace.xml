@@ -70,16 +70,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_directory_selection": "/Users/maeg/study/tobispring/src/test/java/org/mandy/tobi/user/service",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "editor.preferences.import"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.mandy.tobi.user.domain" />
@@ -91,8 +92,8 @@
       <recent name="$PROJECT_DIR$/src/test/resources/org/mandy/tobi/template" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.UserServiceWithGeneralUpgradeLevelTest.upgradeLevels">
-    <configuration name="UserDaoTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.UserServiceWithGeneralUpgradeLevelTest (1)">
+    <configuration name="UserServiceTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -105,7 +106,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.UserDaoTest&quot;" />
+            <option value="&quot;org.mandy.tobi.user.service.UserServiceTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -115,7 +116,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserDaoTest.getAll" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserServiceTest.upgradeAllOrNothing" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -128,7 +129,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.UserDaoTest.getAll&quot;" />
+            <option value="&quot;org.mandy.tobi.user.service.UserServiceTest.upgradeAllOrNothing&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -138,7 +139,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserServiceWithGeneralUpgradeLevelTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -151,7 +152,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.user.domain.UserServiceTest&quot;" />
+            <option value="&quot;org.mandy.tobi.user.service.UserServiceWithGeneralUpgradeLevelTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -197,7 +198,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.user.domain.UserServiceWithGeneralUpgradeLevelTest.upgradeLevels&quot;" />
+            <option value="&quot;org.mandy.tobi.user.service.UserServiceWithGeneralUpgradeLevelTest.upgradeLevels&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -209,11 +210,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.UserServiceWithGeneralUpgradeLevelTest (1)" />
         <item itemvalue="Gradle.UserServiceWithGeneralUpgradeLevelTest.upgradeLevels" />
-        <item itemvalue="Gradle.UserServiceTest" />
+        <item itemvalue="Gradle.UserServiceTest (1)" />
+        <item itemvalue="Gradle.UserServiceTest.upgradeAllOrNothing" />
         <item itemvalue="Gradle.UserServiceWithGeneralUpgradeLevelTest" />
-        <item itemvalue="Gradle.UserDaoTest" />
-        <item itemvalue="Gradle.UserDaoTest.getAll" />
       </list>
     </recent_temporary>
   </component>
