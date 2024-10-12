@@ -2,10 +2,13 @@ package org.mandy.tobi.user.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mandy.tobi.dao.MockUserDao;
+import org.mandy.tobi.dao.UserDao;
 import org.mandy.tobi.user.domain.GeneralUserLevelUpgradePolicy;
 import org.mandy.tobi.user.domain.Level;
 import org.mandy.tobi.user.domain.User;
+import org.mockito.ArgumentCaptor;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mandy.tobi.user.domain.GeneralUserLevelUpgradePolicy.MIN_LOGIN_COUNT_FOR_SILVER;
 import static org.mandy.tobi.user.domain.GeneralUserLevelUpgradePolicy.MIN_RECCOMEND_COUNT_FOR_GOLD;
+import static org.mockito.Mockito.*;
 
 public class UserServiceWithGeneralUpgradeLevelTest {
     List<User> users;
@@ -35,25 +39,31 @@ public class UserServiceWithGeneralUpgradeLevelTest {
         GeneralUserLevelUpgradePolicy policy = new GeneralUserLevelUpgradePolicy();;
         userService.setLevelUpgradePolicy(policy);
 
-        MockMailSender mailSender = new MockMailSender();
-        userService.setMailSender(mailSender);
-        MockUserDao mockUserDao = new MockUserDao(users);
+        MailSender mockMailSender = mock(MailSender.class);
+        userService.setMailSender(mockMailSender);
+
+        UserDao mockUserDao = mock(UserDao.class);
+        when(mockUserDao.getAll()).thenReturn(this.users);
         userService.setUserDao(mockUserDao);
 
         // when
         userService.upgradeLevels();
 
         // then
-        List<User> updated = mockUserDao.getUpdated();
-        assertThat(updated.size()).isEqualTo(2);
-        checkUserAndLevel(updated.get(0), 2, Level.SILVER);
-        checkUserAndLevel(updated.get(1), 4, Level.GOLD);
+        verify(mockUserDao, times(2)).update(any(User.class));
+        verify(mockUserDao, times(2)).update(any(User.class));
+        verify(mockUserDao).update(users.get(1));
+        assertThat(users.get(1).getLevel()).isEqualTo(Level.SILVER);
+        verify(mockUserDao).update(users.get(3));
+        assertThat(users.get(3).getLevel()).isEqualTo(Level.GOLD);
 
         // 정상적으로 메일이 전송됐는 지를, mail sender가 받은 요청리스트를 가지고 판단
-        List<String> requests = mailSender.getRequests();
-        assertThat(requests.size()).isEqualTo(2);
-        assertThat(requests.get(0)).isEqualTo(users.get(1).getEmail());
-        assertThat(requests.get(1)).isEqualTo(users.get(3).getEmail());
+        ArgumentCaptor<SimpleMailMessage> mailMessageArg = ArgumentCaptor.forClass(SimpleMailMessage.class);
+        verify(mockMailSender, times(2)).send(mailMessageArg.capture());
+
+        List<SimpleMailMessage> mailMessages = mailMessageArg.getAllValues();
+        assertThat(mailMessages.get(0).getTo()[0]).isEqualTo(users.get(1).getEmail());
+        assertThat(mailMessages.get(1).getTo()[0]).isEqualTo(users.get(3).getEmail());
     }
 
     private void checkUserAndLevel(User user, int i, Level level) {
