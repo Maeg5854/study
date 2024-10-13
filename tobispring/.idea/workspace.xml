@@ -92,7 +92,30 @@
       <recent name="$PROJECT_DIR$/src/test/resources/org/mandy/tobi/template" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.HelloClientTest.simpleProxy">
+  <component name="RunManager" selected="Gradle.HelloClientTest.dynamicProxy">
+    <configuration name="HelloClientTest.dynamicProxy" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.mandy.tobi.learn.proxy.HelloClientTest.dynamicProxy&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="HelloClientTest.simpleProxy" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -130,29 +153,6 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;org.mandy.tobi.learn.jdk.ReflectionTest.invokeMethod&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="UserServiceTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.user.service.UserServiceTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -210,11 +210,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.HelloClientTest.dynamicProxy" />
         <item itemvalue="Gradle.HelloClientTest.simpleProxy" />
         <item itemvalue="Gradle.ReflectionTest.invokeMethod" />
         <item itemvalue="Gradle.UserServiceWithGeneralUpgradeLevelTest.upgradeLevels" />
         <item itemvalue="Gradle.UserServiceWithGeneralUpgradeLevelTest (1)" />
-        <item itemvalue="Gradle.UserServiceTest (1)" />
       </list>
     </recent_temporary>
   </component>

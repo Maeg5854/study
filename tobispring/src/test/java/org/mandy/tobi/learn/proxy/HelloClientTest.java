@@ -2,6 +2,8 @@ package org.mandy.tobi.learn.proxy;
 
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Proxy;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HelloClientTest {
@@ -17,5 +19,18 @@ public class HelloClientTest {
         assertThat(proxyHello.sayThankYou("Toby")).isEqualTo("THANK YOU TOBY");
         assertThat(proxyHello.sayHi("Toby")).isEqualTo("HI TOBY");
         assertThat(proxyHello.sayHello("Toby")).isEqualTo("HELLO TOBY");
+    }
+
+    @Test
+    public void dynamicProxy() {
+        Hello proxyHello = (Hello) Proxy.newProxyInstance(
+                getClass().getClassLoader(),
+                new Class[]{Hello.class},
+                new UppercaseHandler(new HelloTarget())
+        );
+        assertThat(proxyHello.sayThankYou("Toby")).isEqualTo("THANK YOU TOBY");
+        assertThat(proxyHello.sayHi("Toby")).isEqualTo("HI TOBY");
+        assertThat(proxyHello.sayHello("Toby")).isEqualTo("HELLO TOBY");
+
     }
 }
