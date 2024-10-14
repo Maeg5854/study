@@ -30,12 +30,17 @@ public class ApplicationContext {
 
     @Bean
     public UserService userService() throws Exception {
+        return (UserService) $userService().getObject();
+    }
+
+    @Bean
+    public TxProxyFactoryBean $userService() {
         TxProxyFactoryBean factoryBean = new TxProxyFactoryBean();
         factoryBean.setTransactionManager(transactionManager());
         factoryBean.setPattern("upgradeLevels");
         factoryBean.setTarget(userServiceImpl());
         factoryBean.setServiceInterface(UserService.class);
-        return (UserService) factoryBean.getObject();
+        return factoryBean;
     }
 
     @Bean
