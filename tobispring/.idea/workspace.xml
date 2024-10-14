@@ -93,7 +93,7 @@
       <recent name="$PROJECT_DIR$/src/test/resources/org/mandy/tobi/template" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.UserServiceTest">
+  <component name="RunManager" selected="Gradle.HelloClientTest.proxyFactoryBean">
     <configuration name="FactoryBeanTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -140,7 +140,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="HelloClientTest.dynamicProxy" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="HelloClientTest.proxyFactoryBean" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -153,7 +153,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.mandy.tobi.learn.proxy.HelloClientTest.dynamicProxy&quot;" />
+            <option value="&quot;org.mandy.tobi.learn.proxy.HelloClientTest.proxyFactoryBean&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -211,11 +211,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.HelloClientTest.proxyFactoryBean" />
         <item itemvalue="Gradle.UserServiceTest" />
         <item itemvalue="Gradle.UserServiceTest.upgradeAllOrNothing" />
         <item itemvalue="Gradle.FactoryBeanTest.getPepperFromFactory" />
         <item itemvalue="Gradle.FactoryBeanTest" />
-        <item itemvalue="Gradle.HelloClientTest.dynamicProxy" />
       </list>
     </recent_temporary>
   </component>
