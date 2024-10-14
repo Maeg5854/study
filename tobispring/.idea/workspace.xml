@@ -93,7 +93,7 @@
       <recent name="$PROJECT_DIR$/src/test/resources/org/mandy/tobi/template" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.FactoryBeanTest.getPepperFromFactory">
+  <component name="RunManager" selected="Gradle.UserServiceTest.upgradeAllOrNothing">
     <configuration name="FactoryBeanTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -211,9 +211,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.UserServiceTest.upgradeAllOrNothing" />
         <item itemvalue="Gradle.FactoryBeanTest.getPepperFromFactory" />
         <item itemvalue="Gradle.FactoryBeanTest" />
-        <item itemvalue="Gradle.UserServiceTest.upgradeAllOrNothing" />
         <item itemvalue="Gradle.HelloClientTest.dynamicProxy" />
         <item itemvalue="Gradle.HelloClientTest.simpleProxy" />
       </list>

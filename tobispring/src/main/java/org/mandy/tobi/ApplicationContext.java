@@ -5,8 +5,9 @@ import org.mandy.tobi.dao.UserDaoJdbc;
 import org.mandy.tobi.user.domain.GeneralUserLevelUpgradePolicy;
 import org.mandy.tobi.user.domain.UserLevelUpgradePolicy;
 import org.mandy.tobi.user.service.DummyMailSender;
+import org.mandy.tobi.user.service.TxProxyFactoryBean;
+import org.mandy.tobi.user.service.UserService;
 import org.mandy.tobi.user.service.UserServiceImpl;
-import org.mandy.tobi.user.service.UserServiceTx;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -26,6 +27,17 @@ public class ApplicationContext {
         DummyMailSender mailSender = new DummyMailSender();
         return mailSender;
     }
+
+    @Bean
+    public UserService userService() throws Exception {
+        TxProxyFactoryBean factoryBean = new TxProxyFactoryBean();
+        factoryBean.setTransactionManager(transactionManager());
+        factoryBean.setPattern("upgradeLevels");
+        factoryBean.setTarget(userServiceImpl());
+        factoryBean.setServiceInterface(UserService.class);
+        return (UserService) factoryBean.getObject();
+    }
+
     @Bean
     public UserServiceImpl userServiceImpl() {
         UserServiceImpl userService = new UserServiceImpl();
@@ -33,13 +45,6 @@ public class ApplicationContext {
         userService.setLevelUpgradePolicy(userLevelUpgradePolicy());
         userService.setMailSender(mailSender());
         return userService;
-    }
-    @Bean
-    public UserServiceTx userService() {
-        UserServiceTx userServiceTx = new UserServiceTx();
-        userServiceTx.setUserService(userServiceImpl());
-        userServiceTx.setTransactionManager(transactionManager());
-        return userServiceTx;
     }
 
     @Bean
