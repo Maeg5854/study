@@ -2,12 +2,17 @@ package org.mandy.tobi;
 
 import org.mandy.tobi.dao.UserDao;
 import org.mandy.tobi.dao.UserDaoJdbc;
+import org.mandy.tobi.proxy.TransactionAdvice;
 import org.mandy.tobi.user.domain.GeneralUserLevelUpgradePolicy;
 import org.mandy.tobi.user.domain.UserLevelUpgradePolicy;
 import org.mandy.tobi.user.service.DummyMailSender;
 import org.mandy.tobi.user.service.TxProxyFactoryBean;
 import org.mandy.tobi.user.service.UserService;
 import org.mandy.tobi.user.service.UserServiceImpl;
+import org.springframework.aop.PointcutAdvisor;
+import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -29,8 +34,25 @@ public class ApplicationContext {
     }
 
     @Bean
-    public UserService userService() throws Exception {
-        return (UserService) $userService().getObject();
+    public TransactionAdvice transactionAdvice() {
+        TransactionAdvice advice = new TransactionAdvice();
+        advice.setTransactionManager(transactionManager());
+        return advice;
+    }
+
+    @Bean
+    public NameMatchMethodPointcut transactionPointcut() {
+        NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
+        pointcut.setMappedName("upgrade*");
+        return pointcut;
+    }
+
+    @Bean
+    public PointcutAdvisor transactionAdvisor() {
+        DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
+        advisor.setPointcut(transactionPointcut());
+        advisor.setAdvice(transactionAdvice());
+        return advisor;
     }
 
     @Bean
@@ -43,6 +65,13 @@ public class ApplicationContext {
         return factoryBean;
     }
 
+    @Bean
+    public ProxyFactoryBean userService() {
+        ProxyFactoryBean pfbean = new ProxyFactoryBean();
+        pfbean.setTarget(userServiceImpl());
+        pfbean.addAdvisor(transactionAdvisor());
+        return pfbean;
+    }
     @Bean
     public UserServiceImpl userServiceImpl() {
         UserServiceImpl userService = new UserServiceImpl();

@@ -8,6 +8,7 @@ import org.mandy.tobi.dao.UserDao;
 import org.mandy.tobi.user.domain.Level;
 import org.mandy.tobi.user.domain.User;
 import org.mandy.tobi.user.domain.UserLevelUpgradePolicy;
+import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,6 +29,9 @@ import static org.mandy.tobi.user.domain.GeneralUserLevelUpgradePolicy.MIN_RECCO
 public class UserServiceTest {
     @Autowired
     private TxProxyFactoryBean txProxyFactoryBean;
+
+    @Autowired
+    private org.springframework.context.ApplicationContext context;
     @Autowired
     private UserDao userDao;
     @Autowired
@@ -80,8 +84,11 @@ public class UserServiceTest {
         testUserService.setLevelUpgradePolicy(policy);
         testUserService.setMailSender(mailSender);
 
-        txProxyFactoryBean.setTarget(testUserService);
-        UserService txUserService = (UserService) txProxyFactoryBean.getObject();
+        ProxyFactoryBean proxyFactoryBean = (ProxyFactoryBean) context.getBean("&userService");
+        proxyFactoryBean.setTarget(testUserService);
+
+        UserService txUserService = (UserService) proxyFactoryBean.getObject();
+
 
         userDao.deleteAll();
         for(User user : users) userDao.add(user);
