@@ -4,6 +4,8 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.aop.support.NameMatchMethodPointcut;
 
 import java.lang.reflect.Proxy;
 
@@ -41,10 +43,14 @@ public class HelloClientTest {
     public void proxyFactoryBean() {
         ProxyFactoryBean pfBean = new ProxyFactoryBean();
         pfBean.setTarget(new HelloTarget());
-        pfBean.addAdvice(new UppercaseAdvice());
+
+        NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
+        pointcut.setMappedName("sayH*");
+
+        pfBean.addAdvisor(new DefaultPointcutAdvisor(pointcut, new UppercaseAdvice()));
 
         Hello proxyHello = (Hello) pfBean.getObject();
-        assertThat(proxyHello.sayThankYou("Toby")).isEqualTo("THANK YOU TOBY");
+        assertThat(proxyHello.sayThankYou("Toby")).isEqualTo("Thank You Toby");
         assertThat(proxyHello.sayHi("Toby")).isEqualTo("HI TOBY");
         assertThat(proxyHello.sayHello("Toby")).isEqualTo("HELLO TOBY");
     }
