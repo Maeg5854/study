@@ -2,15 +2,16 @@ package org.mandy.tobi;
 
 import org.mandy.tobi.dao.UserDao;
 import org.mandy.tobi.dao.UserDaoJdbc;
+import org.mandy.tobi.proxy.NameMatchClassMethodPointcut;
 import org.mandy.tobi.proxy.TransactionAdvice;
 import org.mandy.tobi.user.domain.GeneralUserLevelUpgradePolicy;
 import org.mandy.tobi.user.domain.UserLevelUpgradePolicy;
 import org.mandy.tobi.user.service.DummyMailSender;
-import org.mandy.tobi.user.service.TxProxyFactoryBean;
+import org.mandy.tobi.user.service.TestUserServiceImpl;
 import org.mandy.tobi.user.service.UserService;
 import org.mandy.tobi.user.service.UserServiceImpl;
 import org.springframework.aop.PointcutAdvisor;
-import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.springframework.context.annotation.Bean;
@@ -25,10 +26,20 @@ import javax.sql.DataSource;
 @Configuration
 public class ApplicationContext {
 
+    /**
+     * 프록시 생성기
+     * 1. Advisor 인터페이스를 구현한것을 모두 찾아 놓는다
+     * 2. 생성되는 모든 빈에 대해 어드바이저 포인트컷 비교 -> 대상 찾기
+     * 3. 대상이라면 프록시 생성 후 바꿔치기
+     * @return
+     */
+    @Bean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator () {
+        return new DefaultAdvisorAutoProxyCreator();
+    }
+
     @Bean
     public MailSender mailSender() {
-//        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-//        mailSender.setHost("mail.server.com");
         DummyMailSender mailSender = new DummyMailSender();
         return mailSender;
     }
@@ -42,7 +53,8 @@ public class ApplicationContext {
 
     @Bean
     public NameMatchMethodPointcut transactionPointcut() {
-        NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
+        NameMatchClassMethodPointcut pointcut = new NameMatchClassMethodPointcut();
+        pointcut.setMappedClassName("*ServiceImpl");
         pointcut.setMappedName("upgrade*");
         return pointcut;
     }
@@ -56,24 +68,16 @@ public class ApplicationContext {
     }
 
     @Bean
-    public TxProxyFactoryBean $userService() {
-        TxProxyFactoryBean factoryBean = new TxProxyFactoryBean();
-        factoryBean.setTransactionManager(transactionManager());
-        factoryBean.setPattern("upgradeLevels");
-        factoryBean.setTarget(userServiceImpl());
-        factoryBean.setServiceInterface(UserService.class);
-        return factoryBean;
+    public UserService testUserService() {
+        TestUserServiceImpl testUserService = new TestUserServiceImpl();
+        testUserService.setUserDao(userDao());
+        testUserService.setLevelUpgradePolicy(userLevelUpgradePolicy());
+        testUserService.setMailSender(mailSender());
+        return testUserService;
     }
 
     @Bean
-    public ProxyFactoryBean userService() {
-        ProxyFactoryBean pfbean = new ProxyFactoryBean();
-        pfbean.setTarget(userServiceImpl());
-        pfbean.addAdvisor(transactionAdvisor());
-        return pfbean;
-    }
-    @Bean
-    public UserServiceImpl userServiceImpl() {
+    public UserService userService() {
         UserServiceImpl userService = new UserServiceImpl();
         userService.setUserDao(userDao());
         userService.setLevelUpgradePolicy(userLevelUpgradePolicy());

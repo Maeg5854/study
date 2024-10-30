@@ -8,7 +8,6 @@ import org.mandy.tobi.dao.UserDao;
 import org.mandy.tobi.user.domain.Level;
 import org.mandy.tobi.user.domain.User;
 import org.mandy.tobi.user.domain.UserLevelUpgradePolicy;
-import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,8 +26,6 @@ import static org.mandy.tobi.user.domain.GeneralUserLevelUpgradePolicy.MIN_RECCO
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = ApplicationContext.class)
 public class UserServiceTest {
-    @Autowired
-    private TxProxyFactoryBean txProxyFactoryBean;
 
     @Autowired
     private org.springframework.context.ApplicationContext context;
@@ -36,10 +33,8 @@ public class UserServiceTest {
     private UserDao userDao;
     @Autowired
     private DataSource dataSource;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private UserServiceImpl userServiceImpl;
+
+
     @Autowired
     private UserLevelUpgradePolicy policy;
     @Autowired
@@ -47,6 +42,8 @@ public class UserServiceTest {
     private List<User> users;
     @Autowired
     private PlatformTransactionManager transactionManager;
+    @Autowired private UserService userService;
+    @Autowired private UserService testUserService;
 
     @BeforeEach
     public void setUp() {
@@ -79,21 +76,10 @@ public class UserServiceTest {
 
     @Test
     public void upgradeAllOrNothing() throws Exception {
-        UserServiceImpl testUserService = new TestUserService(users.get(3).getId());
-        testUserService.setUserDao(this.userDao);
-        testUserService.setLevelUpgradePolicy(policy);
-        testUserService.setMailSender(mailSender);
-
-        ProxyFactoryBean proxyFactoryBean = (ProxyFactoryBean) context.getBean("&userService");
-        proxyFactoryBean.setTarget(testUserService);
-
-        UserService txUserService = (UserService) proxyFactoryBean.getObject();
-
-
         userDao.deleteAll();
         for(User user : users) userDao.add(user);
 
-        assertThatThrownBy(() -> txUserService.upgradeLevels()).isInstanceOf(TestUserServiceException.class);
+        assertThatThrownBy(() -> this.testUserService.upgradeLevels()).isInstanceOf(TestUserServiceException.class);
 
         checkLevelUpgraded(users.get(1), false);
     }
